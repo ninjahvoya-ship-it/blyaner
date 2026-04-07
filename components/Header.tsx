@@ -59,18 +59,22 @@ export default function Header({ title }: { title: string }) {
           <Stopwatch compact={false} />
         </div>
 
-        {/* Task counter placeholder */}
-        <div className="hidden md:flex items-center gap-1 text-[11px] text-text-muted bg-main-bg rounded-lg px-3 py-1.5">
-          <span className="font-bold text-lime-dark">—</span>
-          <span>Задач</span>
-          <span className="text-text-muted/40 ml-1">Сегодня</span>
+        {/* Progress ring */}
+        <div className="hidden md:flex items-center gap-2">
+          <div className="relative w-9 h-9">
+            <svg className="w-9 h-9 -rotate-90" viewBox="0 0 36 36">
+              <circle cx="18" cy="18" r="15" fill="none" stroke="#ECEAF4" strokeWidth="3" />
+              <circle cx="18" cy="18" r="15" fill="none" stroke="#D4E84D" strokeWidth="3" strokeDasharray="94.2" strokeDashoffset="70" strokeLinecap="round" />
+            </svg>
+            <span className="absolute inset-0 flex items-center justify-center text-[9px] font-bold text-text-dark">3/12</span>
+          </div>
         </div>
 
         {/* Avatar + Dropdown */}
         {user && (
           <div className="relative" ref={menuRef}>
             <button onClick={() => setMenuOpen(!menuOpen)}
-              className="w-9 h-9 bg-sidebar rounded-full flex items-center justify-center text-white text-sm font-extrabold hover:bg-sidebar-dark transition ring-2 ring-transparent hover:ring-lime-card/40">
+              className="w-9 h-9 bg-lime-card rounded-full flex items-center justify-center text-text-dark text-sm font-extrabold hover:bg-lime-dark transition ring-2 ring-transparent hover:ring-sidebar/30">
               {initial}
             </button>
 

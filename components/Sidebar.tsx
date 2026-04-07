@@ -168,17 +168,8 @@ export default function Sidebar() {
         </div>
       </div>
 
-      {/* Bottom nav */}
-      <div className="px-3 pb-4 mt-auto space-y-0.5">
-        <a href="/profile" className={`flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] font-medium transition
-          ${pathname === '/profile' ? 'bg-white/15 text-white' : 'text-white/50 hover:text-white/70 hover:bg-white/5'}`}>
-          <i className="ph ph-user text-sm"></i> Профиль
-        </a>
-        <a href="/settings" className={`flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] font-medium transition
-          ${pathname === '/settings' ? 'bg-white/15 text-white' : 'text-white/50 hover:text-white/70 hover:bg-white/5'}`}>
-          <i className="ph ph-gear text-sm"></i> Настройки
-        </a>
-      </div>
+      {/* Bottom spacer */}
+      <div className="pb-4 mt-auto" />
     </aside>
   );
 }
