@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useUser } from "../lib/auth";
 import { getTasks, createTask, updateTask, deleteTask, Task } from "../lib/tasks";
 
@@ -19,7 +19,6 @@ function getWeekDates() {
   const dayOfWeek = now.getDay();
   const monday = new Date(now);
   monday.setDate(now.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
-  
   return dayHeaders.map((_, i) => {
     const d = new Date(monday);
     d.setDate(monday.getDate() + i);
@@ -32,15 +31,10 @@ function formatDate(dateStr: string) {
   return { date: d.getDate().toString().padStart(2, '0'), month: d.toLocaleDateString('ru', { month: 'short' }).replace('.', '') };
 }
 
-const projectColors: Record<string, string> = {
-  '#B8ADE8': 'bg-purple-card-light',
-  '#D4E84D': 'bg-lime-card/40',
-  '#FCB6C7': 'bg-pink-100',
-  '#FDE68A': 'bg-yellow-100',
-  '#93C5FD': 'bg-blue-100',
-  '#FDBA74': 'bg-orange-100',
-  '#5EEAD4': 'bg-teal-100',
-  '#FCA5A5': 'bg-red-100',
+const projectColorsBg: Record<string, string> = {
+  '#B8ADE8': 'bg-purple-card-light', '#D4E84D': 'bg-lime-card/40', '#FCB6C7': 'bg-pink-100',
+  '#FDE68A': 'bg-yellow-100', '#93C5FD': 'bg-blue-100', '#FDBA74': 'bg-orange-100',
+  '#5EEAD4': 'bg-teal-100', '#FCA5A5': 'bg-red-100',
 };
 
 export default function WeekGrid() {
@@ -48,6 +42,9 @@ export default function WeekGrid() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTexts, setNewTexts] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
+  const [dragId, setDragId] = useState<string | null>(null);
+  const [dropDate, setDropDate] = useState<string | null>(null);
+  const [undoTask, setUndoTask] = useState<{ task: Task; timer: NodeJS.Timeout } | null>(null);
   const weekDates = getWeekDates();
   const today = new Date().toISOString().split('T')[0];
 
@@ -77,13 +74,47 @@ export default function WeekGrid() {
     setTasks(prev => prev.map(t => t.id === task.id ? { ...t, done: !t.done } : t));
   };
 
-  const handleDelete = async (taskId: string) => {
-    await deleteTask(taskId);
+  const handleDelete = useCallback((taskId: string) => {
+    const task = tasks.find(t => t.id === taskId);
+    if (!task) return;
+
+    // Optimistic: hide it
     setTasks(prev => prev.filter(t => t.id !== taskId));
+
+    // Undo timer
+    if (undoTask) { clearTimeout(undoTask.timer); deleteTask(undoTask.task.id); }
+    const timer = setTimeout(() => {
+      deleteTask(taskId);
+      setUndoTask(null);
+    }, 5000);
+    setUndoTask({ task, timer });
+  }, [tasks, undoTask]);
+
+  const handleUndo = useCallback(() => {
+    if (!undoTask) return;
+    clearTimeout(undoTask.timer);
+    setTasks(prev => [...prev, undoTask.task]);
+    setUndoTask(null);
+  }, [undoTask]);
+
+  // Drag & drop
+  const handleDragStart = (taskId: string) => setDragId(taskId);
+  const handleDragOver = (e: React.DragEvent, date: string) => { e.preventDefault(); setDropDate(date); };
+  const handleDragLeave = () => setDropDate(null);
+  const handleDrop = async (date: string) => {
+    if (!dragId) return;
+    setDropDate(null);
+    const task = tasks.find(t => t.id === dragId);
+    if (!task || task.date === date) { setDragId(null); return; }
+
+    // Optimistic
+    setTasks(prev => prev.map(t => t.id === dragId ? { ...t, date } : t));
+    await updateTask(dragId, { date });
+    setDragId(null);
   };
 
   if (authLoading) return <div className="flex-1 flex items-center justify-center"><p className="text-text-muted">Загрузка...</p></div>;
-  
+
   if (!user) return (
     <div className="flex-1 flex flex-col items-center justify-center gap-3">
       <i className="ph ph-sign-in text-4xl text-text-muted/20"></i>
@@ -93,15 +124,21 @@ export default function WeekGrid() {
   );
 
   return (
-    <div className="flex-1 overflow-auto">
+    <div className="flex-1 overflow-auto relative">
       <div className="flex h-full">
         {weekDates.map((date, i) => {
           const { date: dayNum, month } = formatDate(date);
           const isToday = date === today;
           const dayTasks = tasks.filter(t => t.date === date);
+          const isDrop = dropDate === date;
 
           return (
-            <div key={date} className="flex-1 border-r border-grid-line flex flex-col last:border-r-0">
+            <div key={date}
+              className={`flex-1 border-r border-grid-line flex flex-col last:border-r-0 transition ${isDrop ? 'bg-lime-card/10' : ''}`}
+              onDragOver={e => handleDragOver(e, date)}
+              onDragLeave={handleDragLeave}
+              onDrop={() => handleDrop(date)}>
+
               <div className={`border-b border-grid-line px-3 py-3 text-center bg-surface sticky top-0 z-10 shrink-0 ${isToday ? 'border-t-2 border-t-lime-card bg-[#FEFDF5]' : ''}`}>
                 <p className={`text-[10px] font-medium ${isToday ? 'text-lime-dark font-bold' : 'text-text-muted'}`}>{dayHeaders[i].day}</p>
                 <p className="text-lg font-extrabold text-text-dark">{dayNum}</p>
@@ -116,17 +153,20 @@ export default function WeekGrid() {
                 ) : (
                   <>
                     {dayTasks.map(task => {
-                      const bgColor = task.project?.color ? (projectColors[task.project.color] || 'bg-purple-card-light') : 'bg-white border border-sidebar/30';
+                      const bgColor = task.project?.color ? (projectColorsBg[task.project.color] || 'bg-purple-card-light') : 'bg-white border border-sidebar/30';
                       return (
-                        <div key={task.id} onClick={() => handleToggle(task)}
-                          className={`${bgColor} rounded-lg p-2 relative group cursor-pointer transition-all ${task.done ? 'opacity-50' : ''}`}>
+                        <div key={task.id}
+                          draggable
+                          onDragStart={() => handleDragStart(task.id)}
+                          onClick={() => handleToggle(task)}
+                          className={`${bgColor} rounded-lg p-2 relative group cursor-pointer transition-all ${task.done ? 'opacity-50' : ''} ${dragId === task.id ? 'opacity-30 scale-95' : ''} hover:shadow-md`}>
                           <button onClick={(e) => { e.stopPropagation(); handleDelete(task.id); }}
                             className="absolute top-1.5 right-1.5 w-4 h-4 bg-white/60 rounded flex items-center justify-center hover:bg-red-100 transition opacity-0 group-hover:opacity-100">
                             <i className="ph ph-x text-[8px] text-text-dark/50"></i>
                           </button>
                           <p className={`text-[11px] font-semibold text-text-dark leading-tight pr-5 ${task.done ? 'line-through' : ''}`}>{task.text}</p>
                           <p className="text-[8px] text-text-dark/50 mt-0.5">
-                            {task.project?.name || 'Без проекта'}{task.time_spent ? ` · ${task.time_spent}` : ''}{task.done ? ' ✓' : ''}
+                            {task.project?.name || ''}{task.time_spent ? ` · ${task.time_spent}` : ''}{task.done ? ' ✓' : ''}
                           </p>
                         </div>
                       );
@@ -154,6 +194,16 @@ export default function WeekGrid() {
           );
         })}
       </div>
+
+      {/* Undo toast */}
+      {undoTask && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-slide-up">
+          <div className="bg-text-dark text-white rounded-xl px-5 py-3 flex items-center gap-4 shadow-2xl min-w-[280px]">
+            <span className="text-[12px] flex-1">Задача удалена</span>
+            <button onClick={handleUndo} className="text-lime-card text-[12px] font-bold hover:text-white transition">Отменить</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

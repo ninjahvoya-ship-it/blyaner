@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useUser } from "../lib/auth";
 import { getProjects, createProject, deleteProject, getGoals, createGoal, updateGoal, deleteGoal, Project, Goal } from "../lib/tasks";
 import { usePathname } from "next/navigation";
+import SleepWidget from "./SleepWidget";
 
 const PROJECT_COLORS = ['#B8ADE8', '#D4E84D', '#FCB6C7', '#FDE68A', '#93C5FD', '#FDBA74', '#5EEAD4', '#FCA5A5'];
 
@@ -94,6 +95,11 @@ export default function Sidebar() {
           </a>
         ))}
       </nav>
+
+      <hr className="border-white/10 mx-5" />
+
+      {/* Sleep */}
+      <SleepWidget />
 
       <hr className="border-white/10 mx-5" />
 
