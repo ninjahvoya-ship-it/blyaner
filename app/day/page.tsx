@@ -1,6 +1,6 @@
-import Sidebar from "@/components/Sidebar";
-import Header from "@/components/Header";
-import DayList from "@/components/DayList";
+import Sidebar from "../../components/Sidebar";
+import Header from "../../components/Header";
+import DayList from "../../components/DayList";
 
 export default function DayPage() {
   return (

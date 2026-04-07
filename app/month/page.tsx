@@ -1,6 +1,6 @@
-import Sidebar from "@/components/Sidebar";
-import Header from "@/components/Header";
-import MonthGrid from "@/components/MonthGrid";
+import Sidebar from "../../components/Sidebar";
+import Header from "../../components/Header";
+import MonthGrid from "../../components/MonthGrid";
 
 export default function MonthPage() {
   return (

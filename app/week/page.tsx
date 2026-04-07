@@ -1,6 +1,6 @@
-import Sidebar from "@/components/Sidebar";
-import Header from "@/components/Header";
-import WeekGrid from "@/components/WeekGrid";
+import Sidebar from "../../components/Sidebar";
+import Header from "../../components/Header";
+import WeekGrid from "../../components/WeekGrid";
 
 export default function WeekPage() {
   return (
