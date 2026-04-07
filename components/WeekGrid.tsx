@@ -140,15 +140,15 @@ export default function WeekGrid() {
   return (
     <div className="flex-1 overflow-auto relative flex flex-col">
       {/* Date navigation bar */}
-      <div className="flex items-center justify-center gap-4 py-2.5 bg-surface border-b border-grid-line shrink-0">
+      <div className="flex items-center gap-4 px-5 py-3 bg-surface border-b border-grid-line shrink-0">
         <button onClick={() => { setWeekOffset(w => w - 1); }}
-          className="w-7 h-7 rounded-full bg-main-bg hover:bg-grid-line flex items-center justify-center transition">
-          <i className="ph ph-caret-left text-xs text-text-muted"></i>
+          className="w-7 h-7 rounded-lg border border-grid-line flex items-center justify-center hover:bg-main-bg transition">
+          <i className="ph ph-caret-left text-xs text-text-dark"></i>
         </button>
-        <span className="text-sm font-medium text-text-dark min-w-[200px] text-center">{formatWeekRange(weekDates)}</span>
+        <span className="text-sm font-bold text-text-dark">{formatWeekRange(weekDates)}</span>
         <button onClick={() => { setWeekOffset(w => w + 1); }}
-          className="w-7 h-7 rounded-full bg-main-bg hover:bg-grid-line flex items-center justify-center transition">
-          <i className="ph ph-caret-right text-xs text-text-muted"></i>
+          className="w-7 h-7 rounded-lg border border-grid-line flex items-center justify-center hover:bg-main-bg transition">
+          <i className="ph ph-caret-right text-xs text-text-dark"></i>
         </button>
       </div>
 
