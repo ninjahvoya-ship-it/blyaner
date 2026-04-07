@@ -14,9 +14,9 @@ const tabs = [
 ];
 
 const viewTitles: Record<string, string> = {
-  week: "Моя неделя",
-  day: "Мой день",
-  month: "Мой месяц",
+  week: "Твоя неделя",
+  day: "Твой день",
+  month: "Твой месяц",
 };
 
 export default function Header({ title }: { title: string }) {
