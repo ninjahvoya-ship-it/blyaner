@@ -14,16 +14,29 @@ const dayHeaders = [
   { key: 'sun', day: 'ВС', offset: 6 },
 ];
 
-function getWeekDates() {
+function getWeekDates(offset = 0) {
   const now = new Date();
   const dayOfWeek = now.getDay();
   const monday = new Date(now);
-  monday.setDate(now.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
+  monday.setDate(now.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1) + offset * 7);
   return dayHeaders.map((_, i) => {
     const d = new Date(monday);
     d.setDate(monday.getDate() + i);
     return d.toISOString().split('T')[0];
   });
+}
+
+function formatWeekRange(dates: string[]) {
+  const months = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+  const first = new Date(dates[0] + 'T00:00:00');
+  const last = new Date(dates[6] + 'T00:00:00');
+  const fDay = first.getDate();
+  const fMonth = months[first.getMonth()];
+  const lDay = last.getDate();
+  const lMonth = months[last.getMonth()];
+  const year = last.getFullYear();
+  if (fMonth === lMonth) return `${fDay} — ${lDay} ${lMonth} ${year}`;
+  return `${fDay} ${fMonth} — ${lDay} ${lMonth} ${year}`;
 }
 
 function formatDate(dateStr: string) {
@@ -45,7 +58,8 @@ export default function WeekGrid() {
   const [dragId, setDragId] = useState<string | null>(null);
   const [dropDate, setDropDate] = useState<string | null>(null);
   const [undoTask, setUndoTask] = useState<{ task: Task; timer: NodeJS.Timeout } | null>(null);
-  const weekDates = getWeekDates();
+  const [weekOffset, setWeekOffset] = useState(0);
+  const weekDates = getWeekDates(weekOffset);
   const today = new Date().toISOString().split('T')[0];
 
   useEffect(() => {
@@ -124,8 +138,21 @@ export default function WeekGrid() {
   );
 
   return (
-    <div className="flex-1 overflow-auto relative">
-      <div className="flex h-full">
+    <div className="flex-1 overflow-auto relative flex flex-col">
+      {/* Date navigation bar */}
+      <div className="flex items-center justify-center gap-4 py-2.5 bg-surface border-b border-grid-line shrink-0">
+        <button onClick={() => { setWeekOffset(w => w - 1); }}
+          className="w-7 h-7 rounded-full bg-main-bg hover:bg-grid-line flex items-center justify-center transition">
+          <i className="ph ph-caret-left text-xs text-text-muted"></i>
+        </button>
+        <span className="text-sm font-medium text-text-dark min-w-[200px] text-center">{formatWeekRange(weekDates)}</span>
+        <button onClick={() => { setWeekOffset(w => w + 1); }}
+          className="w-7 h-7 rounded-full bg-main-bg hover:bg-grid-line flex items-center justify-center transition">
+          <i className="ph ph-caret-right text-xs text-text-muted"></i>
+        </button>
+      </div>
+
+      <div className="flex flex-1">
         {weekDates.map((date, i) => {
           const { date: dayNum, month } = formatDate(date);
           const isToday = date === today;

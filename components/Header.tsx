@@ -38,7 +38,6 @@ export default function Header({ title }: { title: string }) {
     router.push('/login');
   };
 
-  // Timer
   useEffect(() => {
     if (timerRunning) {
       timerRef.current = setInterval(() => setTimerSeconds(s => s + 1), 1000);
@@ -54,7 +53,6 @@ export default function Header({ title }: { title: string }) {
     return `${String(m).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
   };
 
-  // Close dropdown on outside click
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) setMenuOpen(false);
@@ -65,10 +63,9 @@ export default function Header({ title }: { title: string }) {
 
   return (
     <header className="bg-surface border-b border-grid-line shrink-0">
-      {/* Row 1: Main controls */}
       <div className="px-6 py-3 flex items-center justify-between">
         {/* Left: Title */}
-        <h2 className="text-lg font-extrabold text-text-dark">{displayTitle}</h2>
+        <h2 className="text-xl font-extrabold text-text-dark">{displayTitle}</h2>
 
         {/* Right: controls */}
         <div className="flex items-center gap-3">
@@ -86,32 +83,17 @@ export default function Header({ title }: { title: string }) {
             ))}
           </div>
 
-          {/* Stopwatch: play button + time */}
-          <div className="hidden md:flex items-center gap-1.5">
+          {/* Stopwatch: lime play circle + time */}
+          <div className="hidden md:flex items-center gap-2">
             <button onClick={() => setTimerRunning(!timerRunning)}
-              className={`w-8 h-8 rounded-full flex items-center justify-center transition ${
+              className={`w-9 h-9 rounded-full flex items-center justify-center transition shadow-sm ${
                 timerRunning ? 'bg-red-100 hover:bg-red-200' : 'bg-lime-card hover:bg-lime-dark'
               }`}>
-              <i className={`ph-bold ${timerRunning ? 'ph-pause' : 'ph-play'} text-xs ${timerRunning ? 'text-red-500' : 'text-text-dark'}`}></i>
+              <i className={`ph-bold ${timerRunning ? 'ph-pause' : 'ph-play'} text-sm ${timerRunning ? 'text-red-500' : 'text-text-dark'}`}></i>
             </button>
-            <span className={`font-mono text-sm font-bold tabular-nums ${timerRunning ? 'text-red-500' : 'text-text-dark'}`}>
+            <span className={`font-mono text-[15px] font-bold tabular-nums ${timerRunning ? 'text-red-500' : 'text-text-dark'}`}>
               {formatTimer(timerSeconds)}
             </span>
-          </div>
-
-          {/* Progress ring */}
-          <div className="hidden md:flex items-center gap-1.5">
-            <div className="relative w-9 h-9">
-              <svg className="w-9 h-9 -rotate-90" viewBox="0 0 36 36">
-                <circle cx="18" cy="18" r="15" fill="none" stroke="#ECEAF4" strokeWidth="2.5" />
-                <circle cx="18" cy="18" r="15" fill="none" stroke="#8B7EC8" strokeWidth="2.5" strokeDasharray="94.2" strokeDashoffset="54" strokeLinecap="round" />
-              </svg>
-              <span className="absolute inset-0 flex items-center justify-center text-[9px] font-bold text-text-dark">3/7</span>
-            </div>
-            <div className="leading-tight">
-              <p className="text-[9px] text-text-muted">Задач</p>
-              <p className="text-[10px] font-semibold text-text-dark">Сегодня</p>
-            </div>
           </div>
 
           {/* Avatar + Dropdown */}
