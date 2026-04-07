@@ -198,7 +198,7 @@ export default function Sidebar() {
       </div>
 
       {/* Projects */}
-      <div className="mt-auto">
+      <div className="mt-4">
         <div className="flex justify-between items-center mb-2">
           <h3 className="text-xs font-bold">Проекты</h3>
           <button onClick={() => setShowNewProject(!showNewProject)}
