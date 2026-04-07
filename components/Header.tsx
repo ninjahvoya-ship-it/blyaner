@@ -13,6 +13,12 @@ const tabs = [
   { key: "month", label: "Месяц", href: "/month" },
 ];
 
+const viewTitles: Record<string, string> = {
+  week: "Моя неделя",
+  day: "Мой день",
+  month: "Мой месяц",
+};
+
 export default function Header({ title }: { title: string }) {
   const pathname = usePathname();
   const activeTab = pathname?.replace("/", "") || "week";
@@ -23,13 +29,13 @@ export default function Header({ title }: { title: string }) {
 
   const userName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || '';
   const initial = userName.charAt(0).toUpperCase();
+  const displayTitle = viewTitles[activeTab] || title;
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
     router.push('/login');
   };
 
-  // Close menu on outside click
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) setMenuOpen(false);
@@ -40,33 +46,38 @@ export default function Header({ title }: { title: string }) {
 
   return (
     <header className="bg-surface border-b border-grid-line px-6 py-3 flex items-center justify-between shrink-0">
-      <h2 className="text-lg font-extrabold text-text-dark">{title}</h2>
+      {/* Left: Title */}
+      <h2 className="text-lg font-extrabold text-text-dark">{displayTitle}</h2>
 
-      <div className="flex items-center gap-4">
+      {/* Right: all controls in a row */}
+      <div className="flex items-center gap-3">
         {/* Tabs */}
-        <div className="flex gap-1.5">
+        <div className="flex bg-main-bg rounded-full p-0.5">
           {tabs.map((tab) => (
             <a key={tab.key} href={tab.href}
-              className={`text-xs font-bold px-4 py-1.5 rounded-full transition ${activeTab === tab.key ? "bg-sidebar text-white" : "text-text-muted hover:text-text-dark hover:ring-1 hover:ring-sidebar/40"}`}>
+              className={`text-[11px] font-bold px-4 py-1.5 rounded-full transition ${activeTab === tab.key ? "bg-sidebar text-white" : "text-text-muted hover:text-text-dark"}`}>
               {tab.label}
             </a>
           ))}
         </div>
 
-        {/* Free stopwatch */}
-        <div className="hidden md:flex items-center gap-2 bg-main-bg rounded-lg px-3 py-1.5">
-          <i className="ph ph-timer text-text-muted text-xs"></i>
+        {/* Stopwatch */}
+        <div className="hidden md:flex items-center gap-2 bg-main-bg rounded-full px-3 py-1.5">
           <Stopwatch compact={false} />
         </div>
 
-        {/* Progress ring */}
-        <div className="hidden md:flex items-center gap-2">
+        {/* Progress ring + task count */}
+        <div className="hidden md:flex items-center gap-1.5">
           <div className="relative w-9 h-9">
             <svg className="w-9 h-9 -rotate-90" viewBox="0 0 36 36">
-              <circle cx="18" cy="18" r="15" fill="none" stroke="#ECEAF4" strokeWidth="3" />
-              <circle cx="18" cy="18" r="15" fill="none" stroke="#D4E84D" strokeWidth="3" strokeDasharray="94.2" strokeDashoffset="70" strokeLinecap="round" />
+              <circle cx="18" cy="18" r="15" fill="none" stroke="#ECEAF4" strokeWidth="2.5" />
+              <circle cx="18" cy="18" r="15" fill="none" stroke="#D4E84D" strokeWidth="2.5" strokeDasharray="94.2" strokeDashoffset="54" strokeLinecap="round" />
             </svg>
-            <span className="absolute inset-0 flex items-center justify-center text-[9px] font-bold text-text-dark">3/12</span>
+            <span className="absolute inset-0 flex items-center justify-center text-[9px] font-bold text-text-dark">3/7</span>
+          </div>
+          <div className="text-right leading-tight">
+            <p className="text-[10px] font-medium text-text-muted">Задач</p>
+            <p className="text-[11px] font-bold text-text-dark">Сегодня</p>
           </div>
         </div>
 
@@ -74,13 +85,12 @@ export default function Header({ title }: { title: string }) {
         {user && (
           <div className="relative" ref={menuRef}>
             <button onClick={() => setMenuOpen(!menuOpen)}
-              className="w-9 h-9 bg-lime-card rounded-full flex items-center justify-center text-text-dark text-sm font-extrabold hover:bg-lime-dark transition ring-2 ring-transparent hover:ring-sidebar/30">
+              className="w-9 h-9 bg-lime-card rounded-full flex items-center justify-center text-text-dark text-sm font-extrabold hover:bg-lime-dark transition">
               {initial}
             </button>
 
             {menuOpen && (
               <div className="absolute right-0 top-12 bg-white rounded-xl shadow-2xl border border-grid-line py-2 z-50 w-52">
-                {/* User info */}
                 <div className="px-4 py-2 border-b border-grid-line mb-1">
                   <p className="text-[12px] font-semibold text-text-dark">{userName}</p>
                   <p className="text-[10px] text-text-muted truncate">{user.email}</p>
