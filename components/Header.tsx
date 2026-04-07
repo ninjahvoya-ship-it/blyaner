@@ -62,20 +62,20 @@ export default function Header({ title }: { title: string }) {
   }, []);
 
   return (
-    <header className="bg-surface border-b border-grid-line shrink-0">
-      <div className="px-6 py-3 flex items-center justify-between">
+    <div className="bg-surface border-b border-grid-line">
+      <div className="flex justify-between items-center px-5 pt-3 pb-3">
         {/* Left: Title */}
-        <h2 className="text-xl font-extrabold text-text-dark">{displayTitle}</h2>
+        <h1 className="text-lg font-extrabold text-text-dark">{displayTitle}</h1>
 
         {/* Right: controls */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-5">
           {/* Tabs pill */}
-          <div className="flex bg-main-bg rounded-full p-0.5 gap-0.5">
+          <div className="flex gap-0.5 bg-main-bg rounded-full p-0.5">
             {tabs.map((tab) => (
               <a key={tab.key} href={tab.href}
-                className={`text-[11px] font-bold px-4 py-1.5 rounded-full transition ${
+                className={`text-xs font-bold px-4 py-1.5 rounded-full transition ${
                   activeTab === tab.key
-                    ? "bg-lime-card text-text-dark"
+                    ? "bg-sidebar text-white"
                     : "text-text-muted hover:text-text-dark"
                 }`}>
                 {tab.label}
@@ -83,25 +83,39 @@ export default function Header({ title }: { title: string }) {
             ))}
           </div>
 
-          {/* Stopwatch: lime play circle + time */}
-          <div className="hidden md:flex items-center gap-2">
+          {/* Stopwatch pill */}
+          <div className="bg-main-bg rounded-full px-4 py-2 flex items-center gap-2">
             <button onClick={() => setTimerRunning(!timerRunning)}
-              className={`w-9 h-9 rounded-full flex items-center justify-center transition shadow-sm ${
-                timerRunning ? 'bg-red-100 hover:bg-red-200' : 'bg-lime-card hover:bg-lime-dark'
+              className={`w-8 h-8 rounded-full flex items-center justify-center transition ${
+                timerRunning ? 'bg-red-100' : 'bg-lime-card'
               }`}>
-              <i className={`ph-bold ${timerRunning ? 'ph-pause' : 'ph-play'} text-sm ${timerRunning ? 'text-red-500' : 'text-text-dark'}`}></i>
+              <i className={`ph-fill ${timerRunning ? 'ph-pause' : 'ph-play'} text-[10px] ${timerRunning ? 'text-red-500' : 'text-text-dark'}`}></i>
             </button>
-            <span className={`font-mono text-[15px] font-bold tabular-nums ${timerRunning ? 'text-red-500' : 'text-text-dark'}`}>
+            <span className={`text-sm font-bold font-mono ${timerRunning ? 'text-red-500' : 'text-text-dark'}`}>
               {formatTimer(timerSeconds)}
             </span>
+          </div>
+
+          {/* Progress ring + task count */}
+          <div className="bg-surface border border-grid-line rounded-2xl px-4 py-2 flex items-center gap-3">
+            <div className="relative w-9 h-9">
+              <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
+                <circle cx="18" cy="18" r="15" fill="none" stroke="#ECEAF4" strokeWidth="3" />
+              </svg>
+              <span className="absolute inset-0 flex items-center justify-center text-[10px] font-extrabold text-text-dark">0/0</span>
+            </div>
+            <div>
+              <p className="text-[10px] text-text-muted leading-tight">Задач</p>
+              <p className="text-xs font-bold text-text-dark leading-tight">Сегодня</p>
+            </div>
           </div>
 
           {/* Avatar + Dropdown */}
           {user && (
             <div className="relative" ref={menuRef}>
               <button onClick={() => setMenuOpen(!menuOpen)}
-                className="w-9 h-9 bg-lime-card rounded-full flex items-center justify-center text-text-dark text-sm font-extrabold hover:bg-lime-dark transition">
-                {initial}
+                className="w-9 h-9 bg-lime-card rounded-full flex items-center justify-center cursor-pointer hover:bg-lime-dark transition shadow-sm">
+                <span className="text-text-dark text-sm font-bold">{initial}</span>
               </button>
 
               {menuOpen && (
@@ -127,6 +141,6 @@ export default function Header({ title }: { title: string }) {
           )}
         </div>
       </div>
-    </header>
+    </div>
   );
 }
