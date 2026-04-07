@@ -84,7 +84,7 @@ export default function DayList() {
                 className="w-5 h-5 rounded-full border-2 border-text-muted/25 cursor-pointer hover:border-sidebar hover:bg-sidebar/5 transition shrink-0"
               />
               <button className="w-6 h-6 rounded-lg hover:bg-main-bg flex items-center justify-center transition">
-                <span className="text-text-muted text-sm">⋯</span>
+                <i className="ph ph-dots-three text-text-muted text-sm"></i>
               </button>
             </div>
           ))}
@@ -106,7 +106,7 @@ export default function DayList() {
       {/* Completed */}
       <div>
         <div className="flex items-center gap-2 mb-3 cursor-pointer" onClick={() => setShowDone(!showDone)}>
-          <span className={`text-[10px] text-text-muted transition ${showDone ? '' : '-rotate-90'}`}>▼</span>
+          <i className="ph ph-caret-down text-[10px] text-text-muted"></i>
           <h2 className="text-xs font-bold text-text-muted uppercase tracking-wider">Выполнено</h2>
           <span className="text-[10px] text-text-muted bg-main-bg rounded-full px-2 py-0.5 font-medium">{doneTasks.length}</span>
         </div>
@@ -116,7 +116,7 @@ export default function DayList() {
             {doneTasks.map(task => (
               <div key={task.id} className="bg-white/60 rounded-xl p-4 border-l-[4px] border-grid-line flex items-center gap-4 opacity-50">
                 <div className="w-8 h-8 bg-lime-card/30 rounded-full flex items-center justify-center shrink-0">
-                  <span className="text-lime-dark text-xs font-bold">✓</span>
+                  <i className="ph-bold ph-check text-lime-dark text-xs"></i>
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-[13px] font-semibold text-text-dark line-through">{task.text}</p>

@@ -110,7 +110,7 @@ export default function WeekGrid() {
                     onClick={(e) => { e.stopPropagation(); deleteTask(key, task.id); }}
                     className="absolute top-1.5 right-1.5 w-4 h-4 bg-white/60 rounded flex items-center justify-center hover:bg-red-100 transition opacity-0 group-hover:opacity-100"
                   >
-                    <span className="text-[8px] text-text-dark/50">✕</span>
+                    <i className="ph ph-x text-[8px] text-text-dark/50"></i>
                   </button>
                   <p className={`text-[11px] font-semibold text-text-dark leading-tight pr-5 ${task.done ? 'line-through' : ''}`}>
                     {task.text}

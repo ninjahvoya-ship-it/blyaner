@@ -11,32 +11,27 @@ export default function Sidebar({ activePage }: { activePage: string }) {
 
   return (
     <div className="w-[260px] bg-sidebar text-white p-5 flex flex-col shrink-0 overflow-y-auto">
-      {/* Logo */}
       <div className="flex items-center gap-2 mb-6">
-        <div className="w-7 h-7 bg-white/20 rounded-lg flex items-center justify-center text-sm">📅</div>
+        <div className="w-7 h-7 bg-white/20 rounded-lg flex items-center justify-center"><i className="ph-bold ph-calendar-check text-sm"></i></div>
         <span className="font-bold">Бля, Ань</span>
       </div>
 
-      {/* Mini Calendar */}
       <div className="bg-white/10 rounded-xl p-3 mb-4">
         <div className="flex justify-between items-center mb-2">
           <span className="text-xs font-bold">Апрель 2026</span>
           <div className="flex gap-1">
-            <button className="w-5 h-5 rounded bg-white/10 flex items-center justify-center text-[8px]">←</button>
-            <button className="w-5 h-5 rounded bg-white/10 flex items-center justify-center text-[8px]">→</button>
+            <button className="w-5 h-5 rounded bg-white/10 flex items-center justify-center"><i className="ph ph-caret-left text-[8px]"></i></button>
+            <button className="w-5 h-5 rounded bg-white/10 flex items-center justify-center"><i className="ph ph-caret-right text-[8px]"></i></button>
           </div>
         </div>
         <div className="grid grid-cols-7 gap-0.5 text-center text-[9px]">
           {days.map(d => <span key={d} className="text-white/40 py-0.5">{d}</span>)}
           {calendarDays.map((d, i) => (
-            <span key={i} className={`py-0.5 ${d.today ? 'bg-lime-card text-text-dark rounded font-bold' : d.prev ? 'text-white/30' : ''}`}>
-              {d.day}
-            </span>
+            <span key={i} className={`py-0.5 ${d.today ? 'bg-lime-card text-text-dark rounded font-bold' : d.prev ? 'text-white/30' : ''}`}>{d.day}</span>
           ))}
         </div>
       </div>
 
-      {/* Sleep */}
       <div className="bg-white/10 rounded-xl p-3 mb-4">
         <h3 className="text-[10px] font-bold text-white/50 uppercase tracking-wider mb-2">Сон</h3>
         <div className="flex items-end justify-between gap-1 h-[36px] mb-2">
@@ -48,17 +43,16 @@ export default function Sidebar({ activePage }: { activePage: string }) {
         </div>
         <p className="text-[9px] text-white/40 mb-2">Среднее: <b className="text-white">5.8 ч</b></p>
         <div className="flex gap-1.5">
-          <button className="flex-1 bg-white/15 text-[9px] font-bold py-1.5 rounded-lg">🌙 Сплю</button>
-          <button className="flex-1 bg-white/15 text-[9px] font-bold py-1.5 rounded-lg">☀️ Встала</button>
+          <button className="flex-1 bg-white/15 text-[9px] font-bold py-1.5 rounded-lg"><i className="ph ph-moon text-[11px]"></i> Сплю</button>
+          <button className="flex-1 bg-white/15 text-[9px] font-bold py-1.5 rounded-lg"><i className="ph ph-sun text-[11px]"></i> Встала</button>
         </div>
       </div>
 
-      {/* Weekly Goals */}
       {(activePage === 'week' || activePage === 'day') && (
         <div className="mb-5">
           <div className="flex justify-between items-center mb-2">
             <h3 className="text-xs font-bold">На неделю</h3>
-            <button className="w-5 h-5 rounded bg-white/15 flex items-center justify-center text-[8px] font-bold hover:bg-white/25 transition">+</button>
+            <button className="w-5 h-5 rounded bg-white/15 flex items-center justify-center hover:bg-white/25 transition"><i className="ph-bold ph-plus text-[8px]"></i></button>
           </div>
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
@@ -66,7 +60,7 @@ export default function Sidebar({ activePage }: { activePage: string }) {
               <span className="text-[11px]">Выбрать стиль Beauty</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-3.5 h-3.5 rounded-full border border-lime-card bg-lime-card/30 flex items-center justify-center text-lime-card text-[6px]">✓</div>
+              <div className="w-3.5 h-3.5 rounded-full border border-lime-card bg-lime-card/30 flex items-center justify-center"><i className="ph-bold ph-check text-lime-card text-[6px]"></i></div>
               <span className="text-[11px] text-white/40 line-through">Спек Планера</span>
             </div>
             <div className="flex items-center gap-2">
@@ -77,12 +71,11 @@ export default function Sidebar({ activePage }: { activePage: string }) {
         </div>
       )}
 
-      {/* Projects */}
       {(activePage === 'week' || activePage === 'day') && (
         <div className="mt-4">
           <div className="flex justify-between items-center mb-2">
             <h3 className="text-xs font-bold">Проекты</h3>
-            <button className="w-5 h-5 rounded bg-white/15 flex items-center justify-center text-[8px] font-bold hover:bg-white/25 transition">+</button>
+            <button className="w-5 h-5 rounded bg-white/15 flex items-center justify-center hover:bg-white/25 transition"><i className="ph-bold ph-plus text-[8px]"></i></button>
           </div>
           <div className="flex flex-col gap-1.5">
             {[
