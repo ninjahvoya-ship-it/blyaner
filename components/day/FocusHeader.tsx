@@ -4,17 +4,37 @@ interface Props {
 
 export default function FocusHeader({ date }: Props) {
   const d = new Date(date + 'T00:00:00');
-  const dayNumber = d.getDate().toString().padStart(2, '0');
-  const monthName = d.toLocaleDateString('ru', { month: 'short' });
+  
   const dayNameFull = d.toLocaleDateString('ru', { weekday: 'long' });
+  const dayNameCapitalized = dayNameFull.charAt(0).toUpperCase() + dayNameFull.slice(1);
+  
+  const dayNumber = d.getDate();
+  const monthName = d.toLocaleDateString('ru', { month: 'long' });
+  const year = d.getFullYear();
+
+  const formattedDate = `${dayNameCapitalized}, ${dayNumber} ${monthName} ${year}`;
+  
+  const todayStr = new Date().toISOString().split('T')[0];
+  const isToday = date === todayStr;
 
   return (
-    <div className="mb-8">
-      <p className="text-[10px] text-[#8E8A84] font-medium uppercase tracking-wider mb-2">Твой фокус</p>
-      <h2 className="text-[32px] font-bold text-[#222222] leading-none mb-1">
-        {dayNumber} {monthName}
-      </h2>
-      <p className="text-sm text-[#8E8A84] capitalize">{dayNameFull}</p>
+    <div className="flex items-center gap-4 px-6 py-3 border-b border-[#0000000D] bg-white sticky top-0 z-10 w-full mb-4">
+      <button className="w-7 h-7 rounded-lg border border-[#0000000D] flex items-center justify-center hover:bg-[#FBFAF5] transition">
+        <i className="ph ph-caret-left text-xs text-[#222222]"></i>
+      </button>
+      
+      <div className="flex items-center gap-2">
+        <span className="text-sm font-bold text-[#222222]">{formattedDate}</span>
+        {isToday && (
+          <span className="text-[10px] text-[#B8CC35] font-bold bg-[#C2D629]/20 px-2 py-0.5 rounded-full">
+            Сегодня
+          </span>
+        )}
+      </div>
+
+      <button className="w-7 h-7 rounded-lg border border-[#0000000D] flex items-center justify-center hover:bg-[#FBFAF5] transition ml-auto">
+        <i className="ph ph-caret-right text-xs text-[#222222]"></i>
+      </button>
     </div>
   );
 }
