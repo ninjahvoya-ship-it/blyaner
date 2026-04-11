@@ -11,9 +11,12 @@ export function useTasks(startDate?: string, endDate?: string) {
     if (!user) return;
     setIsLoading(true);
     
-    // Если даты не переданы, берем огромный диапазон для MVP
-    const sDate = startDate || '2020-01-01';
-    const eDate = endDate || '2030-12-31';
+    // Если даты не переданы (как в DayList или MonthGrid по умолчанию), 
+    // берем диапазон: от начала текущего года до конца следующего.
+    // Это оптимально для MVP (покроет все нужды) и не нагрузит БД запросами за 10 лет.
+    const now = new Date();
+    const sDate = startDate || `${now.getFullYear()}-01-01`;
+    const eDate = endDate || `${now.getFullYear() + 1}-12-31`;
     
     const data = await getTasks(user.id, sDate, eDate);
     
