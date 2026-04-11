@@ -22,10 +22,11 @@ export default function DayList() {
   return (
     <div className="flex-1 flex flex-col bg-[#FBFAF5] rounded-tl-3xl shadow-inner overflow-hidden relative h-full">
       
+      {/* Шапка "Суббота, 5 апреля..." без центрирования и ограничений ширины, растянутая на всю ширину левой области */}
       <FocusHeader date={today} />
 
-      <div className="flex-1 overflow-y-auto px-6 py-4 custom-scrollbar flex flex-col items-center">
-        <div className="w-full max-w-3xl">
+      <div className="flex-1 overflow-y-auto px-6 py-4 custom-scrollbar">
+        <div className="w-full">
 
           {/* Активные задачи */}
           <div className="mb-6">
@@ -75,8 +76,8 @@ export default function DayList() {
       </div>
 
       {/* Инпут (sticky bottom) */}
-      <div className="px-8 py-6 bg-gradient-to-t from-[#FBFAF5] via-[#FBFAF5] to-transparent sticky bottom-0 z-10 flex justify-center">
-        <div className="w-full max-w-3xl">
+      <div className="px-6 py-6 bg-gradient-to-t from-[#FBFAF5] via-[#FBFAF5] to-transparent sticky bottom-0 z-10">
+        <div className="w-full">
           <input 
             type="text" 
             placeholder="+ Добавить задачу..." 

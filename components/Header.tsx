@@ -11,7 +11,7 @@ export default function Header({ title }: Props) {
   const pathname = usePathname() || '';
 
   return (
-    <div className="h-20 bg-white border-b border-[#0000000D] flex items-center justify-between px-8 shrink-0">
+    <div className="h-20 bg-white border-b border-[#0000000D] flex items-center justify-between px-8 shrink-0 relative z-20">
       <h1 className="text-lg font-extrabold text-[#222222]">
         {title || 'Твой день'}
       </h1>
@@ -33,10 +33,11 @@ export default function Header({ title }: Props) {
         {/* Mini Stopwatch Widget */}
         <div className="bg-[#FBFAF5] border border-[#0000000D] rounded-full px-4 py-2 flex items-center gap-2">
           <div className="w-8 h-8 bg-[#C2D629] rounded-full flex items-center justify-center cursor-pointer shadow-sm shadow-[#C2D629]/40 hover:scale-105 transition">
-            <i className="ph-fill ph-play text-[#2A2B35] text-[10px]"></i>
+            <i className="ph-fill ph-pause text-[#2A2B35] text-[10px]"></i>
           </div>
-          <div>
-            <span className="text-sm font-bold text-[#222222] font-mono tracking-widest leading-none">00:00</span>
+          <div className="flex flex-col">
+            <span className="text-sm font-bold text-[#222222] font-mono tracking-widest leading-none">01:23:45</span>
+            <span className="text-[8px] text-[#8E8A84] font-medium leading-none mt-1">Сервер OpenClaw</span>
           </div>
         </div>
 
