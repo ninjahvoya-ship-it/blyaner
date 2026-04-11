@@ -9,7 +9,10 @@ export default function FocusHeader({ date }: Props) {
   const dayNameCapitalized = dayNameFull.charAt(0).toUpperCase() + dayNameFull.slice(1);
   
   const dayNumber = d.getDate();
-  const monthName = d.toLocaleDateString('ru', { month: 'long', case: 'genitive' });
+  
+  // Правильный русский родительный падеж для месяцев без TS-ошибок
+  const monthsGenitive = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+  const monthName = monthsGenitive[d.getMonth()];
   const year = d.getFullYear();
 
   const formattedDate = `${dayNameCapitalized}, ${dayNumber} ${monthName} ${year}`;
