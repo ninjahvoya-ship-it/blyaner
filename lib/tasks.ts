@@ -42,6 +42,17 @@ export type Goal = {
   month: string | null;
 };
 
+export type SleepLog = {
+  id: string;
+  user_id: string;
+  date: string;
+  sleep_at?: string;
+  wake_at?: string;
+  bedtime: string | null;
+  wakeup: string | null;
+  duration_minutes: number | null;
+};
+
 export async function getTasks(userId: string, startDate: string, endDate: string) {
   const { data, error } = await supabase
     .from("tasks")
@@ -167,15 +178,6 @@ export async function updateProfile(userId: string, updates: any) {
   if (error) console.error("updateProfile:", error);
 }
 
-export type SleepLog = {
-  id: string;
-  user_id: string;
-  date: string;
-  bedtime: string | null;
-  wakeup: string | null;
-  duration_minutes: number | null;
-};
-
 export async function getSleepLogs(userId: string, startDate?: string, endDate?: string) {
   let q = supabase.from("sleep_logs").select("*").eq("user_id", userId);
   if (startDate) q = q.gte("date", startDate);
@@ -185,8 +187,8 @@ export async function getSleepLogs(userId: string, startDate?: string, endDate?:
   return (data as SleepLog[]) || [];
 }
 
-export async function createSleepLog(userId: string, date: string) {
-  const { data, error } = await supabase.from("sleep_logs").insert({ user_id: userId, date }).select().single();
+export async function createSleepLog(userId: string, date: string, sleep_at?: string, wake_at?: string) {
+  const { data, error } = await supabase.from("sleep_logs").insert({ user_id: userId, date, sleep_at, wake_at }).select().single();
   if (error) console.error("createSleepLog:", error);
   return data as SleepLog;
 }
