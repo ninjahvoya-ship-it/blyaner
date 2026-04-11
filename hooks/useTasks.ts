@@ -10,12 +10,14 @@ export function useTasks(startDate?: string, endDate?: string) {
   const loadTasks = useCallback(async () => {
     if (!user) return;
     setIsLoading(true);
-    const data = await getTasks(user.id);
-    // TODO: Add actual date filtering in supabase query later
-    const filtered = (startDate && endDate) 
-      ? data.filter(t => t.date >= startDate && t.date <= endDate)
-      : data;
-    setTasks(filtered);
+    
+    // Если даты не переданы, берем огромный диапазон для MVP
+    const sDate = startDate || '2020-01-01';
+    const eDate = endDate || '2030-12-31';
+    
+    const data = await getTasks(user.id, sDate, eDate);
+    
+    setTasks(data);
     setIsLoading(false);
   }, [user, startDate, endDate]);
 
