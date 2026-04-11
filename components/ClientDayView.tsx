@@ -11,7 +11,8 @@ export default function ClientDayView() {
       <div className="max-w-[1440px] mx-auto bg-[#F4F3F8] rounded-[32px] shadow-xl overflow-hidden flex min-h-[93vh]">
         
         {/* ===== LEFT SIDEBAR ===== */}
-        <div className="w-[260px] bg-[#8B7EC8] text-white p-5 flex flex-col shrink-0 overflow-y-auto custom-scrollbar">
+        {/* Сделали сайдбар чуть уже (240px вместо 260px) и уменьшили внутренние отступы (p-4 вместо p-5), чтобы виджеты смотрелись компактнее */}
+        <div className="w-[240px] bg-[#8B7EC8] text-white p-4 flex flex-col shrink-0 overflow-y-auto custom-scrollbar">
           <div className="flex items-center gap-2 mb-6">
             <div className="w-7 h-7 bg-white/20 rounded-lg flex items-center justify-center">
               <i className="ph-bold ph-calendar-check text-sm"></i>
@@ -19,7 +20,7 @@ export default function ClientDayView() {
             <span className="font-bold">Бля, Ань</span>
           </div>
 
-          <div className="bg-white/10 rounded-xl p-3 mb-4">
+          <div className="bg-white/10 rounded-xl p-2.5 mb-4">
             <div className="flex justify-between items-center mb-2">
               <span className="text-xs font-bold">Апрель 2026</span>
               <div className="flex gap-1">
@@ -28,7 +29,7 @@ export default function ClientDayView() {
               </div>
             </div>
             <div className="grid grid-cols-7 gap-0.5 text-center text-[9px]">
-              <span className="text-white/40 py-0.5">Пн</span><span className="text-white/40 py-0.5">Вт</span><span className="text-white/40 py-0.5">Ср</span><span className="text-white/40 py-0.5">Чт</span><span class="text-white/40 py-0.5">Пт</span><span className="text-white/40 py-0.5">Сб</span><span className="text-white/40 py-0.5">Вс</span>
+              <span className="text-white/40 py-0.5">Пн</span><span className="text-white/40 py-0.5">Вт</span><span className="text-white/40 py-0.5">Ср</span><span className="text-white/40 py-0.5">Чт</span><span className="text-white/40 py-0.5">Пт</span><span className="text-white/40 py-0.5">Сб</span><span className="text-white/40 py-0.5">Вс</span>
               <span className="py-0.5 text-white/30">30</span><span className="py-0.5 text-white/30">31</span><span className="py-0.5">1</span><span className="py-0.5">2</span><span className="py-0.5">3</span><span className="py-0.5">4</span>
               <span className="py-0.5 bg-[#D4E84D] text-[#2D2B3D] rounded font-bold">5</span>
               <span className="py-0.5">6</span><span className="py-0.5">7</span><span className="py-0.5">8</span><span className="py-0.5">9</span><span className="py-0.5">10</span><span className="py-0.5">11</span><span className="py-0.5">12</span>
@@ -38,9 +39,10 @@ export default function ClientDayView() {
             </div>
           </div>
 
-          <div className="bg-white/10 rounded-xl p-3 mb-4">
+          <div className="bg-white/10 rounded-xl p-2.5 mb-4">
             <h3 className="text-[10px] font-bold text-white/50 uppercase tracking-wider mb-2">Сон</h3>
-            <div className="flex items-end justify-between gap-1 h-[36px] mb-2">
+            {/* Уменьшили высоту графика с 36px до 30px */}
+            <div className="flex items-end justify-between gap-1 h-[30px] mb-2">
               <div className="flex-1 bg-white/10 rounded-t h-full"><div className="w-full bg-[#D4E84D]/60 rounded-t h-[70%]"></div></div>
               <div className="flex-1 bg-white/10 rounded-t h-full"><div className="w-full bg-[#D4E84D]/60 rounded-t h-[50%]"></div></div>
               <div className="flex-1 bg-white/10 rounded-t h-full"><div className="w-full bg-[#FCA5A5]/60 rounded-t h-[25%]"></div></div>
@@ -108,13 +110,15 @@ export default function ClientDayView() {
                   <Link href="/week" className={`text-xs font-bold px-4 py-1.5 rounded-full transition ${pathname.includes('week') ? 'bg-[#8B7EC8] text-white' : 'text-[#8E8BA0] hover:text-[#2D2B3D]'}`}>Неделя</Link>
                   <Link href="/month" className={`text-xs font-bold px-4 py-1.5 rounded-full transition ${pathname.includes('month') ? 'bg-[#8B7EC8] text-white' : 'text-[#8E8BA0] hover:text-[#2D2B3D]'}`}>Месяц</Link>
                 </div>
+                
+                {/* Дефолтное состояние секундомера (без запущенной задачи) */}
                 <div className="bg-[#F4F3F8] rounded-full px-4 py-2 flex items-center gap-2">
-                  <div className="w-8 h-8 bg-[#D4E84D] rounded-full flex items-center justify-center"><i className="ph-fill ph-pause text-[#2D2B3D] text-[10px]"></i></div>
-                  <div>
-                    <span className="text-sm font-bold text-[#2D2B3D] font-mono leading-none block">01:23:45</span>
-                    <p className="text-[8px] text-[#8B7EC8] font-medium -mt-0.5 leading-none">Сервер OpenClaw</p>
+                  <div className="w-8 h-8 bg-[#ECEAF4] rounded-full flex items-center justify-center hover:bg-[#D4E84D] hover:shadow-sm cursor-pointer transition group">
+                    <i className="ph-fill ph-play text-[#8E8BA0] group-hover:text-[#2D2B3D] text-[10px] transition"></i>
                   </div>
+                  <span className="text-sm font-bold text-[#2D2B3D] font-mono leading-none block">00:00:00</span>
                 </div>
+
                 <div className="bg-[#FFFFFF] border border-[#ECEAF4] rounded-2xl px-4 py-2 flex items-center gap-3">
                   <div className="relative w-9 h-9">
                     <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15" fill="none" stroke="#ECEAF4" strokeWidth="3"/><circle cx="18" cy="18" r="15" fill="none" stroke="#8B7EC8" strokeWidth="3" strokeLinecap="round" strokeDasharray="94.2" strokeDashoffset="54"/></svg>
@@ -131,13 +135,16 @@ export default function ClientDayView() {
               </div>
             </div>
             
-            <div className="flex items-center gap-4 px-6 py-3 border-t border-[#ECEAF4]">
-              <button className="w-7 h-7 rounded-lg border border-[#ECEAF4] flex items-center justify-center hover:bg-[#F4F3F8] transition"><i className="ph ph-caret-left text-xs text-[#2D2B3D]"></i></button>
-              <div>
-                <span className="text-sm font-bold text-[#2D2B3D]">Суббота, 5 апреля 2026</span>
-                <span className="text-[10px] text-[#B8CC35] font-bold ml-2 bg-[#D4E84D]/20 px-2 py-0.5 rounded-full">Сегодня</span>
+            {/* Саб-хэдер (Суббота). Убрана двойная линия (border-t удален), стрелочки прижаты к тексту (gap-3) */}
+            <div className="flex items-center px-6 py-3">
+              <div className="flex items-center gap-3">
+                <button className="w-7 h-7 rounded-lg border border-[#ECEAF4] flex items-center justify-center hover:bg-[#F4F3F8] transition"><i className="ph ph-caret-left text-xs text-[#2D2B3D]"></i></button>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-bold text-[#2D2B3D]">Суббота, 5 апреля 2026</span>
+                  <span className="text-[10px] text-[#B8CC35] font-bold bg-[#D4E84D]/20 px-2 py-0.5 rounded-full">Сегодня</span>
+                </div>
+                <button className="w-7 h-7 rounded-lg border border-[#ECEAF4] flex items-center justify-center hover:bg-[#F4F3F8] transition"><i className="ph ph-caret-right text-xs text-[#2D2B3D]"></i></button>
               </div>
-              <button className="w-7 h-7 rounded-lg border border-[#ECEAF4] flex items-center justify-center hover:bg-[#F4F3F8] transition"><i className="ph ph-caret-right text-xs text-[#2D2B3D]"></i></button>
             </div>
           </div>
 
