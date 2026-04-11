@@ -13,7 +13,7 @@ export default function DayList() {
   const [newTaskText, setNewTaskText] = useState("");
 
   if (isLoading) {
-    return <div className="p-8 text-[#8E8A84]">Загрузка задач...</div>;
+    return <div className="flex-1 flex items-center justify-center p-8 text-text-muted">Загрузка задач...</div>;
   }
 
   const todaysTasks = tasks.filter(t => t.date === today);
@@ -28,7 +28,7 @@ export default function DayList() {
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-[#FBFAF5] rounded-tl-3xl shadow-inner overflow-hidden relative h-full">
+    <div className="flex-1 flex flex-col bg-main-bg relative h-full">
       
       <FocusHeader date={today} />
 
@@ -41,14 +41,14 @@ export default function DayList() {
         />
       ) : (
         <>
-          <div className="flex-1 overflow-y-auto px-6 py-4 custom-scrollbar flex flex-col items-center">
-            <div className="w-full max-w-3xl">
+          <div className="flex-1 overflow-y-auto px-6 py-4 custom-scrollbar">
+            <div className="w-full">
 
               {/* Активные задачи */}
               <div className="mb-6">
                 <div className="flex items-center gap-2 mb-3">
-                  <h2 className="text-xs font-bold text-[#222222] uppercase tracking-wider">Задачи</h2>
-                  <span className="text-[10px] text-[#8E8A84] bg-[#F9F9FB] rounded-full px-2 py-0.5 font-medium">
+                  <h2 className="text-xs font-bold text-text-dark uppercase tracking-wider">Задачи</h2>
+                  <span className="text-[10px] text-text-muted bg-main-bg rounded-full px-2 py-0.5 font-medium border border-grid-line">
                     {activeTasks.length} активных
                   </span>
                 </div>
@@ -71,7 +71,7 @@ export default function DayList() {
               {doneTasks.length > 0 && (
                 <div className="mt-8">
                   <div className="flex items-center gap-2 mb-3">
-                    <h2 className="text-xs font-bold text-[#222222] uppercase tracking-wider">Выполнено</h2>
+                    <h2 className="text-xs font-bold text-text-dark uppercase tracking-wider">Выполнено</h2>
                   </div>
                   <div className="flex flex-col gap-2">
                     {doneTasks.map(task => (
@@ -92,15 +92,15 @@ export default function DayList() {
           </div>
 
           {/* Инпут (sticky bottom) */}
-          <div className="px-8 py-6 bg-gradient-to-t from-[#FBFAF5] via-[#FBFAF5] to-transparent sticky bottom-0 z-10 flex justify-center">
-            <div className="w-full max-w-3xl">
+          <div className="px-6 py-6 bg-gradient-to-t from-main-bg via-main-bg to-transparent sticky bottom-0 z-10">
+            <div className="w-full">
               <input 
                 type="text" 
                 placeholder="+ Добавить задачу..." 
                 value={newTaskText}
                 onChange={e => setNewTaskText(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="w-full text-sm text-[#8E8A84] bg-[#F9F9FB] border-2 border-[#2A2B35]/10 rounded-xl px-4 py-3 outline-none focus:border-[#C2D629] focus:ring-1 focus:ring-[#C2D629]/40 placeholder:text-[#8E8A84]/40 transition" 
+                className="w-full text-sm text-text-muted bg-surface border-2 border-grid-line rounded-xl px-4 py-3 outline-none focus:border-lime-card focus:ring-1 focus:ring-lime-card/40 placeholder:text-text-muted/40 transition" 
               />
             </div>
           </div>
