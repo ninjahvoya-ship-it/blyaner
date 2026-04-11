@@ -155,3 +155,14 @@ export async function deleteGoal(goalId: string) {
   const { error } = await supabase.from("goals").delete().eq("id", goalId);
   if (error) console.error("deleteGoal:", error);
 }
+
+export async function getProfile(userId: string) {
+  const { data, error } = await supabase.from("profiles").select("*").eq("id", userId).single();
+  if (error && error.code !== 'PGRST116') console.error("getProfile:", error);
+  return data || { id: userId };
+}
+
+export async function updateProfile(userId: string, updates: any) {
+  const { error } = await supabase.from("profiles").upsert({ id: userId, ...updates });
+  if (error) console.error("updateProfile:", error);
+}
