@@ -166,3 +166,32 @@ export async function updateProfile(userId: string, updates: any) {
   const { error } = await supabase.from("profiles").upsert({ id: userId, ...updates });
   if (error) console.error("updateProfile:", error);
 }
+
+export type SleepLog = {
+  id: string;
+  user_id: string;
+  date: string;
+  bedtime: string | null;
+  wakeup: string | null;
+  duration_minutes: number | null;
+};
+
+export async function getSleepLogs(userId: string, startDate?: string, endDate?: string) {
+  let q = supabase.from("sleep_logs").select("*").eq("user_id", userId);
+  if (startDate) q = q.gte("date", startDate);
+  if (endDate) q = q.lte("date", endDate);
+  const { data, error } = await q;
+  if (error) console.error("getSleepLogs:", error);
+  return (data as SleepLog[]) || [];
+}
+
+export async function createSleepLog(userId: string, date: string) {
+  const { data, error } = await supabase.from("sleep_logs").insert({ user_id: userId, date }).select().single();
+  if (error) console.error("createSleepLog:", error);
+  return data as SleepLog;
+}
+
+export async function updateSleepLog(id: string, updates: Partial<SleepLog>) {
+  const { error } = await supabase.from("sleep_logs").update(updates).eq("id", id);
+  if (error) console.error("updateSleepLog:", error);
+}
