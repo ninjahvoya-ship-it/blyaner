@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { MoonStars, Sun, Play, Timer, PaintBrush, FolderOpen, Bed, Clock, X, Trash, SlidersHorizontal, Asterisk, ArrowRight, ArrowUp, CheckCircle } from "@phosphor-icons/react";
+import { MoonStars, Sun, Play, Timer, PaintBrush, FolderOpen, Bed, Clock, X, Trash, SlidersHorizontal, Asterisk, ArrowRight, ArrowUp, CheckCircle, AppleLogo, AndroidLogo, Desktop } from "@phosphor-icons/react";
 
 export default function LandingPage() {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
@@ -190,6 +190,55 @@ export default function LandingPage() {
                   <div className="flex justify-between items-center bg-gray-50 p-4 rounded-2xl border border-gray-100 opacity-50 grayscale">
                       <div className="flex items-center gap-3"><MoonStars weight="fill" className="text-gray-500 text-xl" /><span className="font-bold text-gray-500">Сон</span></div>
                       <div className="w-12 h-7 bg-gray-200 rounded-full relative shadow-inner"><div className="absolute left-1 top-1 w-5 h-5 bg-white rounded-full shadow-sm"></div></div>
+                  </div>
+              </div>
+          </div>
+      </section>
+
+      {/* PWA Section - Восстановлена! */}
+      <section className="py-24 px-6">
+          <div className="max-w-7xl mx-auto bg-gradient-to-br from-[#8B7EC8] to-[#6A5AAB] rounded-[40px] p-10 lg:p-16 grid md:grid-cols-2 gap-12 items-center relative overflow-hidden shadow-lg border border-white/10 hover:shadow-2xl transition-shadow duration-500">
+              
+              <div className="absolute top-0 left-0 w-96 h-96 bg-white opacity-10 rounded-full blur-[100px] pointer-events-none"></div>
+              <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#2D2B3D] opacity-20 rounded-full blur-[100px] pointer-events-none"></div>
+
+              <div className="relative z-10 flex justify-center">
+                  <div className="w-full max-w-sm bg-white/10 backdrop-blur-xl rounded-[32px] p-8 border border-white/20 shadow-[0_20px_40px_rgba(0,0,0,0.2)] hover:-translate-y-2 transition-transform duration-500">
+                      <div className="flex justify-between items-center mb-6">
+                          <span className="text-white font-bold text-lg tracking-wide">Темная тема</span>
+                          <div className="w-12 h-7 bg-[#D4E84D] rounded-full relative shadow-inner">
+                              <div className="absolute right-1 top-1 w-5 h-5 bg-[#2D2B3D] rounded-full shadow-sm flex items-center justify-center">
+                                  <div className="w-1.5 h-1.5 bg-[#D4E84D] rounded-full"></div>
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <div className="bg-white/5 rounded-[24px] p-5 border border-white/10">
+                          <div className="flex items-center gap-3 mb-4">
+                              <span className="w-8 h-8 rounded-full bg-white/20 flex justify-center items-center font-bold text-white text-xs">1</span>
+                              <h2 className="font-bold text-white">Вторник</h2>
+                          </div>
+                          <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-start gap-3">
+                              <div className="w-2 h-2 rounded-full bg-pink-400 mt-1.5 shadow-[0_0_8px_#F9A8D4]"></div>
+                              <p className="text-sm font-semibold text-white/90">Пост в канал</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div className="relative z-10 lg:pl-8">
+                  <h2 className="text-4xl lg:text-5xl font-black mb-6 text-white leading-tight">
+                      Ноут + Телефон. <br/><span className="text-[#D4E84D]">Без костылей.</span>
+                  </h2>
+                  <p className="font-medium text-white/80 text-[17px] leading-relaxed mb-8 max-w-md">
+                      Нажимать кнопку «Сплю» удобнее с телефона в кровати. А раскидывать задачи по неделе — с большого экрана ноута. Работает бесшовно и ставится на экран айфона в два тапа как нативное приложение (PWA).
+                  </p>
+                  <div className="flex items-center gap-4 text-sm font-bold text-white/70">
+                      <div className="flex items-center gap-1.5"><AppleLogo weight="bold" className="text-xl" /> iOS</div>
+                      <div className="w-1.5 h-1.5 bg-white/30 rounded-full"></div>
+                      <div className="flex items-center gap-1.5"><AndroidLogo weight="bold" className="text-xl" /> Android</div>
+                      <div className="w-1.5 h-1.5 bg-white/30 rounded-full"></div>
+                      <div className="flex items-center gap-1.5"><Desktop weight="bold" className="text-xl" /> Web</div>
                   </div>
               </div>
           </div>
