@@ -195,7 +195,7 @@ export default function LandingPage() {
           </div>
       </section>
 
-      {/* PWA Section - Восстановлена! */}
+      {/* PWA Section */}
       <section className="py-24 px-6">
           <div className="max-w-7xl mx-auto bg-gradient-to-br from-[#8B7EC8] to-[#6A5AAB] rounded-[40px] p-10 lg:p-16 grid md:grid-cols-2 gap-12 items-center relative overflow-hidden shadow-lg border border-white/10 hover:shadow-2xl transition-shadow duration-500">
               
@@ -277,23 +277,74 @@ export default function LandingPage() {
           </div>
       </section>
 
-      {/* Подвал */}
+      {/* Подвал (Новый дизайн с мокапом десктопа) */}
       <section className="py-10 px-6 max-w-7xl mx-auto mb-20">
-          <div className="bg-[#F2EFFF] rounded-[40px] p-10 overflow-hidden grid md:grid-cols-2 gap-10 items-center border border-[#8B7EC8]/10 shadow-sm hover:shadow-md transition-shadow">
-              <div className="relative z-10 lg:pl-10">
-                  <h2 className="text-5xl font-black mb-6 text-[#2D2B3D] leading-tight">Твоя новая неделя <br/>начинается здесь.</h2>
-                  <div className="flex items-center gap-4 mt-10">
-                      <Link href="/week" className="bg-[#8B7EC8] text-white px-8 py-4 rounded-full text-lg font-bold shadow-lg hover:scale-105 transition-transform">
-                          Войти в Блянер
+          <div className="bg-[#F4F3F8] rounded-[40px] pt-16 px-10 overflow-hidden flex flex-col items-center border border-gray-200 shadow-inner">
+              
+              <div className="text-center mb-12 relative z-10">
+                  <h2 className="text-5xl lg:text-6xl font-black mb-6 text-[#2D2B3D] leading-tight tracking-tight">Ну что, <br/><span className="text-[#8B7EC8]">погнали?</span></h2>
+                  <p className="text-xl font-medium text-gray-500 mb-10 max-w-lg mx-auto">Твоя новая, честная и наглядная неделя начинается прямо сейчас.</p>
+                  
+                  <div className="flex items-center justify-center gap-4">
+                      <Link href="/week" className="bg-[#8B7EC8] text-white px-10 py-5 rounded-full text-xl font-bold shadow-lg hover:scale-105 transition-transform flex items-center gap-3">
+                          Войти в Блянер <ArrowRight weight="bold" />
                       </Link>
-                      <span className="text-sm font-bold text-[#8B7EC8] bg-[#8B7EC8]/10 px-4 py-2 rounded-full">Бесплатно</span>
                   </div>
               </div>
               
-              <div className="relative h-full min-h-[300px] bg-[#D4E84D] rounded-[32px] overflow-hidden flex items-center justify-center">
-                  <Asterisk weight="fill" className="text-[200px] text-[#2D2B3D] opacity-10 absolute -right-10 -bottom-10" />
-                  <div className="bg-white p-6 rounded-3xl shadow-xl rotate-12 animate-[float_6s_ease-in-out_infinite]">
-                      <CheckCircle weight="fill" className="text-6xl text-[#8B7EC8]" />
+              {/* Десктопный мокап Блянера */}
+              <div className="relative w-full max-w-4xl mt-4 translate-y-8 hover:translate-y-4 transition-transform duration-500 z-10">
+                  {/* Мак ОС Хедер */}
+                  <div className="w-full bg-gray-100 rounded-t-2xl border-t border-x border-gray-200 px-4 py-3 flex items-center gap-2 shadow-sm">
+                      <div className="w-3 h-3 rounded-full bg-red-400"></div>
+                      <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                      <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                      <div className="mx-auto text-xs font-bold text-gray-400 bg-white px-4 py-1 rounded-md shadow-sm border border-gray-200">blyaner.app</div>
+                  </div>
+                  {/* Тело приложения (Упрощенная сетка) */}
+                  <div className="w-full bg-white rounded-b-2xl border-x border-b border-gray-200 shadow-2xl h-[400px] flex overflow-hidden">
+                      {/* Sidebar */}
+                      <div className="w-20 bg-gray-50 border-r border-gray-200 flex flex-col items-center py-6 gap-6">
+                          <div className="w-10 h-10 rounded-full bg-[#8B7EC8] text-white flex items-center justify-center font-bold text-sm shadow-sm">АВ</div>
+                          <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm border border-gray-200"><FolderOpen weight="fill" className="text-gray-400 text-xl" /></div>
+                          <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm border border-gray-200"><CalendarBlank weight="fill" className="text-[#8B7EC8] text-xl" /></div>
+                          <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm border border-gray-200"><Timer weight="fill" className="text-gray-400 text-xl" /></div>
+                      </div>
+                      {/* Grid */}
+                      <div className="flex-1 bg-white p-8 grid grid-cols-4 gap-6">
+                          {/* Колонка 1 */}
+                          <div className="space-y-4 border-r border-gray-100 pr-6">
+                              <h4 className="font-black text-gray-400 mb-6 tracking-wide">ПН 12</h4>
+                              <div className="bg-[#F2EFFF] p-4 rounded-2xl border border-[#8B7EC8]/20 shadow-sm">
+                                  <div className="flex items-center gap-2 mb-2"><div className="w-2 h-2 rounded-full bg-[#8B7EC8]"></div><span className="text-[10px] font-bold text-gray-400 uppercase">Book Tracker</span></div>
+                                  <p className="font-bold text-gray-800 text-sm">Собрать дизайн-систему</p>
+                              </div>
+                          </div>
+                          {/* Колонка 2 */}
+                          <div className="space-y-4 border-r border-gray-100 pr-6 relative">
+                              <div className="absolute top-0 bottom-0 left-0 bg-gray-50 -z-10 -ml-3 w-[120%] rounded-xl"></div>
+                              <h4 className="font-black text-[#2D2B3D] mb-6 flex items-center gap-2"><span className="w-6 h-6 bg-[#8B7EC8] text-white rounded-full flex items-center justify-center text-xs">13</span> ВТ</h4>
+                              <div className="bg-[#FCE7F3] p-4 rounded-2xl border border-pink-200 shadow-sm">
+                                  <div className="flex items-center gap-2 mb-2"><div className="w-2 h-2 rounded-full bg-pink-400"></div><span className="text-[10px] font-bold text-gray-400 uppercase">Jellyfish Lab</span></div>
+                                  <p className="font-bold text-gray-800 text-sm">Пост в канал</p>
+                              </div>
+                              <div className="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm opacity-50">
+                                  <p className="font-bold text-gray-400 text-sm line-through">Созвон</p>
+                              </div>
+                          </div>
+                          {/* Колонка 3 */}
+                          <div className="space-y-4 border-r border-gray-100 pr-6">
+                              <h4 className="font-black text-gray-400 mb-6 tracking-wide">СР 14</h4>
+                              <div className="bg-[#D4E84D]/20 p-4 rounded-2xl border border-[#D4E84D]/50 shadow-sm">
+                                  <div className="flex items-center gap-2 mb-2"><div className="w-2 h-2 rounded-full bg-[#D4E84D]"></div><span className="text-[10px] font-bold text-gray-500 uppercase">Фриланс</span></div>
+                                  <p className="font-bold text-gray-800 text-sm">Подключить базу данных</p>
+                              </div>
+                          </div>
+                          {/* Колонка 4 */}
+                          <div className="space-y-4">
+                              <h4 className="font-black text-gray-400 mb-6 tracking-wide">ЧТ 15</h4>
+                          </div>
+                      </div>
                   </div>
               </div>
           </div>
